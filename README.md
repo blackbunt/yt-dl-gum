@@ -28,13 +28,13 @@ If the required programs are not installed, they can be manually installed as fo
 
 ```sh
 # Arch Linux / EndeavourOS
-sudo pacman -S yt-dlp ffmpeg gum aria2
+sudo pacman -S yt-dlp ffmpeg gum
 
 # Debian / Ubuntu
-sudo apt update && sudo apt install -y yt-dlp ffmpeg gum aria2
+sudo apt update && sudo apt install -y yt-dlp ffmpeg gum
 
 # macOS (Homebrew)
-brew install yt-dlp ffmpeg gum aria2
+brew install yt-dlp ffmpeg gum
 ```
 
 ### Downloading the Script
