@@ -7,6 +7,7 @@ A simple TUI wrapper for `yt-dlp` that allows selecting videos or audio files co
 - **Support for both audio and video downloads**
 - **Automatically embeds subtitles** (for English and German)
 - **Automatic installation of missing dependencies**
+- **SponsorBlock integration** (remove or mark sponsored segments)
 - **Various output formats supported:**
   - Audio (MP3, best quality)
   - Video (Best available quality or max 1080p)
@@ -71,6 +72,7 @@ Alternatively, a video URL can be passed as a parameter:
   - **Optimized for iPhone?** *(Choose an iOS-compatible format)*
   - **1080p or best available quality?**
 - **If audio:** Automatically downloads in MP3 at the best quality.
+- **SponsorBlock Integration:** Option to remove or mark sponsored segments.
 
 ## Troubleshooting
 If the script does not work as expected:
@@ -94,7 +96,8 @@ A big thank you to the developers of the following tools that make this script p
 - [`gum`](https://github.com/charmbracelet/gum) (for the TUI)
 - [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) (for downloading)
 - [`ffmpeg`](https://ffmpeg.org/) (for transcoding and merging)
-- 
+- [’SponsorBlock’](https://sponsor.ajay.app/)(for skipping sponsored segments)
+
 ## License
 This project is licensed under the **MIT License**.
 
