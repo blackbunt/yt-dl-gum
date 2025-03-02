@@ -104,14 +104,14 @@ get_video_title() {
 # Function to download as MP3 (Audio only)
 download_audio() {
     local url="$1"
-    yt-dlp -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 "$url"
+    yt-dlp -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 $SPONSORBLOCK "$url"
 }
 
 # Function to download as MP4 (Best Video, High Quality)
 download_best_video() {
     local url="$1"
     local filename=$(yt-dlp --get-filename -o "%(title)s" "$url")
-    yt-dlp -f "bv*+ba" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs "$url"
+    yt-dlp -f "bv*+ba" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs $SPONSORBLOCK "$url"
     filename=$(echo "$filename" | sed 's/\[.*\]//')
     remove_subtitles "$filename"
 }
@@ -120,7 +120,7 @@ download_best_video() {
 download_1080p_video() {
     local url="$1"
     local filename=$(yt-dlp --get-filename -o "%(title)s" "$url")
-    yt-dlp -f "bv*[height<=1080]+ba" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs "$url"
+    yt-dlp -f "bv*[height<=1080]+ba" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs $SPONSORBLOCK "$url"
     filename=$(echo "$filename" | sed 's/\[.*\]//')
     remove_subtitles "$filename"
 }
@@ -129,7 +129,16 @@ download_1080p_video() {
 download_best_video_iphone() {
     local url="$1"
     local filename=$(yt-dlp --get-filename -o "%(title)s" "$url")
-    yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]" --merge-output-format mp4 --recode-video mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs "$url"
+    yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]" --merge-output-format mp4 --recode-video mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs $SPONSORBLOCK "$url"
+    filename=$(echo "$filename" | sed 's/\[.*\]//')
+    remove_subtitles "$filename"
+}
+
+# Function to download as MP4 (iPhone compatible, Max 1080p)
+download_1080p_video_iphone(){
+    local url="$1"
+    local filename=$(yt-dlp --get-filename -o "%(title)s" "$url")
+    yt-dlp -f "(bv*[height<=1080][ext=mp4]+ba[ext=m4a])/b[ext=mp4]" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en,de" --embed-subs $SPONSORBLOCK "$url"
     filename=$(echo "$filename" | sed 's/\[.*\]//')
     remove_subtitles "$filename"
 }
@@ -179,6 +188,12 @@ if gum confirm "What do you want to download?" --affirmative="Video" --negative=
         QUALITY="1080p"
     else
         QUALITY="Best available"
+    fi
+    # SponsorBlock: Remove sponsoring/ads?
+    if gum confirm "Do you want to remove sponsored segments (SponsorBlock)?" --affirmative="Yes" --negative="No" --default=Yes; then
+        SPONSORBLOCK="--sponsorblock-remove all"
+    else
+        SPONSORBLOCK=""
     fi
     if [[ "$PLATFORM" == "iOS" ]]; then
         if [[ "$QUALITY" == "1080p" ]]; then
